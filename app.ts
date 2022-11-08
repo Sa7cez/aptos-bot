@@ -29,7 +29,7 @@ const toAPT = (value: bigint | string, fixed = 4) => (Number(value) / 100000000)
 const randomInt = (value) => Math.floor(Math.random() * value)
 const isLocal = process.env.NODE_ENV !== 'production'
 console.log('Local mode:', isLocal)
-if (!isLocal) fs.mkdir(path.join(__dirname, '/wallets')).catch(e => 'output directory exists!')
+if (!isLocal) fs.mkdir(path.join(__dirname, '/wallets')).catch(e => console.log('output directory exists!'))
 
 // Transactions
 const sendTransaction = async (wallet : AptosAccount, payload, simulate = false) => {
