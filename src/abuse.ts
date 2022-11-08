@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv"
-import { AptosClient, AptosAccount, CoinClient, TokenClient } from "aptos"
+import { AptosClient, AptosAccount, CoinClient } from "aptos"
 import { promises as fs } from 'fs'
 import * as path from 'path'
 
@@ -20,7 +20,7 @@ const AMOUNT = Math.floor((parseInt(process.env.MAX_AMOUNT || '1') / 2) * 100000
 const bot = new Telegraf(LAUNCHBOT)
 const client = new AptosClient(NODE_URL)
 const coinClient = new CoinClient(client)
-const tokenClient = new TokenClient(client)
+// const tokenClient = new TokenClient(client)
 
 // Helpers
 const toAPT = (value: bigint | string, fixed = 4) => (Number(value) / 100000000).toFixed(fixed)
