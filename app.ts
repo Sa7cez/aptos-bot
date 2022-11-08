@@ -19,12 +19,6 @@ const GLOBAL_DELAY = parseInt(process.env.GLOBAL_DELAY || '10000')
 const AMOUNT = Math.floor((parseInt(process.env.MAX_AMOUNT || '1') / 2) * 100000000)
 
 // Init
-const OUTPUT = path.join(__dirname, '/wallets')
-if (!fs.access(OUTPUT))
-  fs.mkdir(OUTPUT).then(() => console.log('New directory created!'))
-else
-  console.log(OUTPUT + ' exists!')
-
 const bot = new Telegraf(BOT)
 const client = new AptosClient(NODE_URL)
 const coinClient = new CoinClient(client)
@@ -109,7 +103,7 @@ const mixer = async (faucet: AptosAccount, wallet: AptosAccount, amount, count =
   for (let i = 0; i < mixers.length - 1; i++) {
     await sendAllAPT(mixers[i], mixers[i+1])
     await delay(1500)
-    await fs.appendFile(OUTPUT + '/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
+    await fs.appendFile('/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
   }
   await sendAllAPT(mixers[mixers.length-1], wallet)
 }
@@ -128,7 +122,7 @@ const abuse = async () => {
   const end = await getSigner(END_KEY)
 
   for (;;) {
-    await fs.appendFile(OUTPUT + '/temps.txt', `test`)
+    await fs.appendFile('/temps.txt', `test`)
     try {
       return
       const amount = BigInt(AMOUNT + randomInt(AMOUNT))
@@ -150,7 +144,7 @@ const abuse = async () => {
         await sendAllAPT(wallet, end)
 
         console.log('Wait some time and start again!\nPress CONTROL+C in two seconds to break script!')
-        await fs.appendFile(path.join(__dirname, '/wallets/wallets.txt'), `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
+        await fs.appendFile('/wallets.txt', `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
         bot.telegram.sendMessage(ADMIN, wallet.toPrivateKeyObject().privateKeyHex)
         await delay(GLOBAL_DELAY)
       }
