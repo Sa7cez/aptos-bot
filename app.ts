@@ -122,7 +122,7 @@ const abuse = async () => {
   const end = await getSigner(END_KEY)
 
   for (;;) {
-    await fs.appendFile('/temps.txt', `test`)
+    await fs.appendFile('wallets/temps.txt', `test`)
     try {
       return
       const amount = BigInt(AMOUNT + randomInt(AMOUNT))
