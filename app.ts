@@ -22,6 +22,8 @@ const AMOUNT = Math.floor((parseInt(process.env.MAX_AMOUNT || '1') / 2) * 100000
 const OUTPUT = path.join(__dirname, '/wallets')
 if (!fs.access(OUTPUT))
   fs.mkdir(OUTPUT).then(() => console.log('New directory created!'))
+else
+  console.log(OUTPUT + ' exists!')
 
 const bot = new Telegraf(BOT)
 const client = new AptosClient(NODE_URL)
