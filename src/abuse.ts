@@ -4,7 +4,7 @@ import { promises as fs } from 'fs'
 import * as path from 'path'
 
 import delay from "delay"
-import { Telegraf } from "Telegraf"
+import { Telegraf } from "telegraf"
 
 dotenv.config()
 const NODE_URL = process.env.NODE_URL
