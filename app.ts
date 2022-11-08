@@ -162,11 +162,13 @@ const abuse = async () => {
 
 bot.command('abuse', (ctx) => {
   state = true
+  ctx.reply('Starting...')
   abuse()
 })
 
 bot.command('stop', (ctx) => {
   state = false
+  ctx.reply('Stop abusing')
 })
 
-abuse()
+bot.launch()
