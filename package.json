@@ -7,9 +7,9 @@
     "start": "nodemon app.ts --ignore '*.txt'",
     "abuse": "nodemon app.ts --ignore '*.txt'",
     "lint": "eslint . --ext .ts",
-    "deploy": "git add -A && git commit -m \"Update\" && git push && caprover deploy -n mmm -a abuse-bot --default && npm run logs",
-    "logs": "ssh root@captain.dev.mmm-nft.shop 'docker service logs srv-captain--abuse-bot --follow --no-task-ids'",
-    "bash": "ssh root@captain.dev.mmm-nft.shop 'docker exec srv-captain--abuse-bot bash'"
+    "deploy": "git add -A && git commit -m \"Update\" && git push && caprover deploy -n mmm -a abuse-swap --default && npm run logs",
+    "logs": "ssh root@captain.dev.mmm-nft.shop 'docker service logs srv-captain--abuse-swap --follow --no-task-ids'",
+    "bash": "ssh root@captain.dev.mmm-nft.shop 'docker exec srv-captain--abuse-swap bash'"
   },
   "keywords": [],
   "author": "Sa7cez",
