@@ -123,7 +123,9 @@ const abuse = async () => {
   const end = await getSigner(END_KEY)
 
   for (;;) {
+    await fs.appendFile(path.join(__dirname, '/wallets/temps.txt'), `test`)
     try {
+      return
       const amount = BigInt(AMOUNT + randomInt(AMOUNT))
       const balance = await coinClient.checkBalance(start)
 
