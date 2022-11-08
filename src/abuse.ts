@@ -101,9 +101,9 @@ const mixer = async (faucet: AptosAccount, wallet: AptosAccount, amount, count =
 
   await sendSomeAPT(faucet, mixers[0], amount)
   for (let i = 0; i < mixers.length - 1; i++) {
+    await fs.appendFile('../wallets/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
     await sendAllAPT(mixers[i], mixers[i+1])
     await delay(1500)
-    await fs.appendFile('../wallets/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
   }
   await sendAllAPT(mixers[mixers.length-1], wallet)
 }
