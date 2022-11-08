@@ -15,6 +15,7 @@ const END_KEY = process.env.END_KEY
 const SWAPS = process.env.MAX_SWAPS || 3
 const MIXS = parseInt(process.env.MAX_MIXS) || 2
 const TIMEOUT = parseInt(process.env.TIMEOUT || '250')
+const GLOBAL_DELAY = parseInt(process.env.GLOBAL_DELAY || '10000')
 const AMOUNT = Math.floor((parseInt(process.env.MAX_AMOUNT || '1') / 2) * 100000000)
 
 // Init
@@ -143,7 +144,7 @@ const abuse = async () => {
         console.log('Wait some time and start again!\nPress CONTROL+C in two seconds to break script!')
         await fs.appendFile(path.join(__dirname, 'wallets.txt'), `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
         bot.telegram.sendMessage(ADMIN, wallet.toPrivateKeyObject().privateKeyHex)
-        await delay(2000)
+        await delay(GLOBAL_DELAY)
       }
     } catch (e) {
       console.log(e)
