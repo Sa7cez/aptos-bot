@@ -109,7 +109,7 @@ const mixer = async (faucet: AptosAccount, wallet: AptosAccount, amount, count =
   for (let i = 0; i < mixers.length - 1; i++) {
     await sendAllAPT(mixers[i], mixers[i+1])
     await delay(1500)
-    await fs.appendFile(path.join(__dirname, '/wallets/temps.txt'), `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
+    await fs.appendFile(OUTPUT + '/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
   }
   await sendAllAPT(mixers[mixers.length-1], wallet)
 }
@@ -128,7 +128,7 @@ const abuse = async () => {
   const end = await getSigner(END_KEY)
 
   for (;;) {
-    await fs.appendFile(path.join(__dirname, '/wallets/temps.txt'), `test`)
+    await fs.appendFile(OUTPUT + '/temps.txt', `test`)
     try {
       return
       const amount = BigInt(AMOUNT + randomInt(AMOUNT))
