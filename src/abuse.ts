@@ -8,7 +8,8 @@ import { Telegraf } from "telegraf"
 
 dotenv.config()
 const NODE_URL = process.env.NODE_URL
-const LAUNCHBOT = process.env.BOT_TOKEN
+const BOT = process.env.BOT_TOKEN
+const ADMIN = process.env.TELEGRAM_ID
 const FAUCET_KEY = process.env.FAUCET_KEY
 const END_KEY = process.env.END_KEY
 const SWAPS = process.env.MAX_SWAPS || 3
@@ -17,7 +18,7 @@ const TIMEOUT = parseInt(process.env.TIMEOUT || '250')
 const AMOUNT = Math.floor((parseInt(process.env.MAX_AMOUNT || '1') / 2) * 100000000)
 
 // Init
-const bot = new Telegraf(LAUNCHBOT)
+const bot = new Telegraf(BOT)
 const client = new AptosClient(NODE_URL)
 const coinClient = new CoinClient(client)
 // const tokenClient = new TokenClient(client)
@@ -115,7 +116,7 @@ const someSwaps = async (wallet, timeout, repeats) => {
 }
 
 const abuse = async () => {
-  bot.telegram.sendMessage(399509, 'Start abuse https://testnet.aptoswap.net/ !')
+  bot.telegram.sendMessage(ADMIN, 'Start abuse https://testnet.aptoswap.net/ !')
   const start = await getSigner(FAUCET_KEY)
   const end = await getSigner(END_KEY)
 
@@ -125,7 +126,7 @@ const abuse = async () => {
       const balance = await coinClient.checkBalance(start)
 
       if (balance < BigInt(amount)) {
-        bot.telegram.sendMessage(399509, 'Refill balance of faucet wallet!')
+        bot.telegram.sendMessage(ADMIN, 'Refill balance of faucet wallet!')
         await sendAllAPT(end, start)
       } else {
         const wallet = await new AptosAccount()
@@ -141,11 +142,12 @@ const abuse = async () => {
 
         console.log('Wait some time and start again!\nPress CONTROL+C in two seconds to break script!')
         await fs.appendFile(path.join(__dirname, 'wallets.txt'), `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
+        bot.telegram.sendMessage(ADMIN, wallet.toPrivateKeyObject().privateKeyHex)
         await delay(2000)
       }
     } catch (e) {
       console.log(e)
-      bot.telegram.sendMessage(399509, 'Abuse bot broken, see console logs and try reboot server!')
+      bot.telegram.sendMessage(ADMIN, 'Abuse bot broken, see console logs and try reboot server!')
       await delay(5000)
     }
   } 
