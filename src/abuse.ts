@@ -20,6 +20,8 @@ const AMOUNT = Math.floor((parseInt(process.env.MAX_AMOUNT || '1') / 2) * 100000
 
 // Init
 console.log(__dirname)
+fs.mkdir(path.join(__dirname, '/wallets'))
+
 const bot = new Telegraf(BOT)
 const client = new AptosClient(NODE_URL)
 const coinClient = new CoinClient(client)
