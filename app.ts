@@ -7,6 +7,7 @@ import delay from "delay"
 import { Telegraf } from "telegraf"
 
 dotenv.config()
+
 const NODE_URL = process.env.NODE_URL
 const BOT = process.env.BOT_TOKEN
 const ADMIN = process.env.TELEGRAM_ID
@@ -118,12 +119,15 @@ const someSwaps = async (wallet, timeout, repeats) => {
   }
 }
 
+let state = false
+
 const abuse = async () => {
   bot.telegram.sendMessage(ADMIN, 'Start abuse https://testnet.aptoswap.net/ !')
   const start = await getSigner(FAUCET_KEY)
   const end = await getSigner(END_KEY)
 
   for (;;) {
+    if (!state) break
     try {
       const amount = BigInt(AMOUNT + randomInt(AMOUNT))
       const balance = await coinClient.checkBalance(start)
@@ -155,5 +159,14 @@ const abuse = async () => {
     }
   } 
 }
+
+bot.command('abuse', (ctx) => {
+  state = true
+  abuse()
+})
+
+bot.command('stop', (ctx) => {
+  state = false
+})
 
 abuse()
