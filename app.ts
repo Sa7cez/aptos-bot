@@ -28,7 +28,7 @@ const coinClient = new CoinClient(client)
 const toAPT = (value: bigint | string, fixed = 4) => (Number(value) / 100000000).toFixed(fixed)
 const randomInt = (value) => Math.floor(Math.random() * value)
 const isLocal = process.env.NODE_ENV !== 'production'
-console.log('Local mode:', isLocal)
+// console.log('Local mode:', isLocal)
 // if (!isLocal) fs.mkdir(path.join(__dirname, '/wallets')).catch(e => console.log('output directory exists!'))
 
 // Transactions
@@ -125,8 +125,6 @@ const abuse = async () => {
   const end = await getSigner(END_KEY)
 
   for (;;) {
-    await fs.appendFile(path.join(__dirname, '/wallets/temps.txt'), `test`)
-      .then(r => console.log(r))
     try {
       const amount = BigInt(AMOUNT + randomInt(AMOUNT))
       const balance = await coinClient.checkBalance(start)
