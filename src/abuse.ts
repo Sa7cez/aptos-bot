@@ -60,8 +60,8 @@ const sendSomeAPT = async (from : AptosAccount, to : AptosAccount, amount : bigi
     ]
   })
 
+// Aptoswap contract
 const contract = '0xa5d3ac4d429052674ed38adc62d010e52d7c24ca159194d17ddc196ddb7e480b'
-
 const swap = async (wallet : AptosAccount) => {
   const input = '0x1::aptos_coin::AptosCoin'
   const output = '0x498d8926f16eb9ca90cab1b3a26aa6f97a080b3fcbe6e83ae150b7243a00fb68::devnet_coins::DevnetBTC'
