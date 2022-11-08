@@ -1,8 +1,7 @@
 .DS_Store
 node_modules
 /dist
-/src/temps.txt
-/src/wallets.txt
+/wallets
 
 # local env files
 .env

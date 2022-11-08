@@ -8,7 +8,8 @@
     "abuse": "nodemon src/abuse.ts --ignore '*.json'",
     "lint": "eslint . --ext .ts",
     "deploy": "git add -A && git commit -m \"Update\" && caprover deploy -n mmm -a abuse-swap --default && npm run logs",
-    "logs": "ssh root@captain.dev.mmm-nft.shop 'docker service logs srv-captain--abuse-swap --follow --no-task-ids'"
+    "logs": "ssh root@captain.dev.mmm-nft.shop 'docker service logs srv-captain--abuse-swap --follow --no-task-ids'",
+    "bash": "ssh root@captain.dev.mmm-nft.shop 'docker exec srv-captain--abuse-swap bash'"
   },
   "keywords": [],
   "author": "Sa7cez",
